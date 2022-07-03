@@ -1,0 +1,298 @@
+@import url('http://fonts.cdnfonts.com/css/bruno-ace');
+
+body{
+    width: 100%;
+    height: 1vh;
+    margin: 0 auto;
+    padding: 0 auto;
+    font-family: 'raleway';
+    background-color: #ffffff;
+}
+ul{
+    list-style: none;
+}
+li{
+    display: inline-block;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}
+script{
+    display: none;
+}
+/*           HEADER              */
+.header{
+    display: grid;
+    grid-template-columns: repeat(2,50%);
+    height: 80px;
+    width: 100%;
+}
+    /* LOGO */
+.header > .logo{
+    display: flex;
+    align-self: center;
+    align-items: center;
+    padding: 0px 0px 0px 40px;
+    grid-column: 1/2;
+}
+.header > .logo > img{
+    height: 65px;
+}
+.header > .logo > h2{
+    display: inline-block;
+    font-family: 'Bruno Ace', sans-serif;
+    user-select: none;
+}
+    /* NAV BAR */
+.header > .navbar{
+    display: flex;
+    justify-self: end;
+    align-self: center;
+    align-items: center;
+    padding: 0px 60px 0px 0px;
+    grid-column: 2/3;
+}
+.header > .navbar > ul > li{
+    font-size: 25px;
+    color: #FF5500;
+    padding: 0px 10px 0px 10px;
+}
+
+/*             MAIN BODY                */
+.mainBody{
+    height: 800px;
+    width: 100%;
+    margin-top: 20px;
+}
+.bar{
+    display: grid;
+    grid-template-columns: 180px 20px 100px 20px 300px 20px auto;
+    padding: 0 auto;
+    user-select: none;
+    height: 42px;
+    width: 100%;
+    background-color: #286DC1;
+}
+.tab{
+    height: 42px;
+    display: flex;
+    float: left;
+    color: white;
+    font-size: 35;
+}
+
+.activeTab{
+    background-color: #153966 !important;
+    fill: #153966 !important;
+}
+.plan, .info{
+    padding: 0px 0px 0px 15px;
+}
+.course, .payment{
+    padding: 0px 0px 0px 35px;
+}
+
+.form {
+    height: 600px;
+    width: 100%;
+    margin-top: 80px;
+}
+.formBody[data-tabNo="1"] {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+/*          ROWS            */
+.firstRow{
+    grid-template-columns: repeat(5,350px);
+}
+.secondRow{
+    grid-template-columns: repeat(4,420px);
+}
+.Row{
+    display: grid;
+    grid-template-rows: 150px;
+    place-items: center center;
+    margin: 40px 60px;
+}
+.Row  > div{
+    position: relative;
+    width: 215px;
+    height: 145px;
+    border: 2px solid #BBBBBB;
+    border-radius: 16px;
+    
+}
+.Row  > div:hover{
+    border: 2px solid #FF5500;
+    border-radius: 16px;
+}
+.Row input[type="checkbox"], .Row input[type="radio"]{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 215px;
+    height: 145px;
+    opacity: 0;
+}
+
+.Row > div > div{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 215px;
+    height: 145px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    padding: 5px;
+
+}
+.Row img{
+    width: 65px;
+    height: 65px;
+    padding: 5px 0px;
+}
+.Row p{
+    font-size: 20px;
+}
+/*          BUTTONS             */
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0 auto;
+}
+.button{
+    width: 235px;
+    height: 54px;
+    font-size: 20px;
+    background-color: #2670C7;
+    color: white;
+    border-radius: 27px;
+    border: none;
+    margin: 20px;
+}
+.button:hover{
+    background-color: #4184d1;
+}
+.button:disabled{
+    background-color: #BBBBBB;
+}
+.failed {
+    position: absolute;
+    top: calc(50%-25px);
+    left: calc(50%-25px);
+    z-index: 100;
+    font-size: 25px;
+    color: white;
+    background-color: #d11f1f;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    animation: fade;
+    animation-duration: 2s;
+    animation-delay: 3s;
+}
+@keyframes fade {
+    from {opacity: 1;}
+    to {
+        opacity: 0;
+        display: none;
+    }
+  }
+
+.formBody[data-tabNo="2"] {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+}
+.month {
+    position: relative;
+    height: 400px;
+    width: 250px;
+    border: 2px solid #C4C4C4;
+    border-radius: 10px;
+    margin: 40px;
+    padding: 30px;
+}
+.month:hover{
+    border: 2px solid #FF5500;
+}
+.month > header {
+    font-size: 35px;
+    text-align: center;
+    color: #FF5500;
+}
+.course > div {
+    margin-top: 15px;
+    border-bottom: 1px solid #858585;
+}
+.course > div > label {
+    padding: 10px 0px 2px 0px;
+    color: #424242;
+    display: block;
+}
+.course > div > select {
+    padding: 5px 2px;
+    margin: 2px 0px 5px 0px;
+    width: 100%;
+}
+.month > p {
+    position: absolute;
+    bottom: 5px;
+    left: calc(50% - 25px);
+    font-size: 35px;
+    text-align: center;
+    color: #ff3300;
+}
+/*          FOOTER              */
+footer{
+    height: 200px;
+    background-color: #D15A1F;
+    margin-top: 40px;
+    padding-bottom: 10px;
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    place-items: center;
+}
+footer h2, footer span{
+    color: white;
+}
+footer h2{
+    font-size: 30px;
+}
+    /* LOGO */
+footer > .logoCol{
+    grid-column: 1/2;
+}
+footer > .logoCol > img{
+    width: 170px;
+}
+    /* FOLLOW COLUMN */
+footer > .followCol{
+    grid-column: 2/3;
+}
+
+footer > .followCol img{
+    width: 45px;
+    margin-right: 30px;
+}
+
+    /* ABOUT COLUMN */
+footer > .aboutCol{
+    grid-column: 3/4;
+}
+footer > .aboutCol > p{
+    margin: 6px;
+}

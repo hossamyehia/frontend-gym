@@ -1,0 +1,325 @@
+@import url('http://fonts.cdnfonts.com/css/bruno-ace');
+
+body{
+    width: 100%;
+    height: 1vh;
+    margin: 0 auto;
+    padding: 0 auto;
+    font-family: 'raleway';
+    background-color: #ffffff;
+}
+ul{
+    list-style: none;
+}
+li{
+    display: inline-block;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}
+script{
+    display: none;
+}
+/*           HEADER              */
+.header{
+    display: grid;
+    grid-template-columns: repeat(2,50%);
+    height: 80px;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+    /* LOGO */
+.header > .logo{
+    display: flex;
+    align-self: center;
+    align-items: center;
+    padding: 0px 0px 0px 40px;
+    grid-column: 1/2;
+}
+.header > .logo > img{
+    height: 65px;
+}
+.header > .logo > h2{
+    display: inline-block;
+    font-family: 'Bruno Ace', sans-serif;
+}
+    /* NAV BAR */
+.header > .navbar{
+    display: flex;
+    justify-self: end;
+    align-self: center;
+    align-items: center;
+    padding: 0px 60px 0px 0px;
+    grid-column: 2/3;
+}
+.header > .navbar > ul > li{
+    font-size: 25px;
+    color: #FF5500;
+    padding: 0px 10px 0px 10px;
+}
+.header > .navbar > ul > li.signup{
+    color: #FF3D00;
+}
+/*             MAIN BODY                */
+
+    /*  Personal Info Page    */
+.mainBody{
+    display: grid;
+    grid-template-columns: 25% 75%;
+    grid-template-rows: 100%;
+    padding: 70px 0px 0px 0px;
+    justify-items: center;
+    height: 800px;
+    width: 100%;
+}
+.mainBody > .list {
+    width: 60%;
+    border-right: 1px solid black;
+    padding: 0px 20px 0px 0px;
+}
+.mainBody > .list > h2 {
+    font-size: large;
+    color: #FF5500;
+    border-top: 1px solid black;
+    text-align: center;
+    padding: 20px 0px 0px 0px;
+    cursor: pointer;
+}
+.mainBody > .list > h2:active {
+    color: black;
+}
+.mainBody > .list > h2.selected {
+    cursor: default !important;
+    color: black !important;
+}
+.mainBody > .list > h2:last-of-type {
+    padding: 20px 0px 20px 0px;
+    border-bottom: 1px solid black;
+}
+.mainBody > .data {
+    display: none;
+    width: 90%;
+    padding: 50px;
+}
+.mainBody > .data[data-page="info"].display {
+    display: grid;
+    grid-template-rows: repeat(6,1fr);
+    grid-auto-flow: column;
+}
+.mainBody > .data[data-page="info"] > div{
+    width: 75%;
+    border-top: 2px solid #949494;
+    padding: 0px 10px;
+}
+
+.mainBody > .data[data-page="info"] > div > div{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+}
+.data[data-page="info"] h2{
+    color: #0B2443;
+    padding: 0;
+    margin: 10px 0px;
+}
+.data[data-page="info"] img{
+    justify-self:end;
+    cursor: pointer;
+}
+.data[data-page="info"] p{
+    color: gray;
+    font-size: 20px;
+}
+.data[data-page="info"] input[type="submit"],.data[data-page="info"] input[type="button"]{
+    display: none;
+    justify-self: baseline;
+    width: 70%;
+    height: 60px;
+    margin: 20px;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 25px;
+    cursor: pointer;
+    user-select: none;
+}
+.data[data-page="info"] input[type="submit"]{
+    background-color: #2670C7;
+}
+.data[data-page="info"] input[type="submit"]:hover{
+    background-color: #1e60ac;
+}
+.data[data-page="info"] input[type="submit"]:active{
+    background-color: #0d4483;
+}
+.data[data-page="info"] input[type="button"]{
+    background-color: #FF1F00;
+}
+.data[data-page="info"] input[type="button"]:hover{
+    background-color: #ff5a44;
+}
+.data[data-page="info"] input[type="button"]:active{
+    background-color: #dd1a00;
+}
+.hide {
+    display: none !important;
+}
+.show {
+    display: block !important;
+}
+.data input:not([type="submit"]):not([type="button"]){
+    height: 50px;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 18px;
+    margin: 0px;
+    padding: 0px 0px 0px 10px;
+}
+/**********************************/
+     /*     Plan Page     */
+.mainBody > .data[data-page="plan"].display {
+    display: block;
+    text-align: center;
+}
+.data[data-page="plan"] > h1,.data[data-page="plan"] > a {
+    display: block;
+}
+.data[data-page="plan"] > a > button {
+    color: #ffffff;
+    border: none;
+    height: 40px;
+    width: 100px;
+    border-radius: 5px;
+    background-color: #2670C7;
+    cursor: pointer;
+}
+.data[data-page="plan"] > a > button:hover {
+    background-color: #1e60ac;
+}
+.data[data-page="plan"] > a > button:active {
+    background-color: #0d4483;
+}
+
+.plan{
+    display: flex;
+    flex-direction: row;
+}
+
+.courses{
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    height: 500px;
+    width: 65%;
+    margin: 40px;
+    padding: 20px;
+
+    justify-content: center;
+    align-items: center;
+    
+    border: 2px solid #BBBBBB;
+    border-radius: 16px;
+}
+
+.courses > div{
+    width: 170px;
+    height: 145px;
+    border: 2px solid #FF5500;
+    border-radius: 16px;
+    margin: 0px 30px;
+}
+
+.courses img{
+    width: 65px;
+    height: 65px;
+    padding: 10px;
+}
+.courses p{
+    font-size: 20px;
+}
+
+.card{
+    height: 500px;
+    width: 35%;
+    border: 2px solid #C4C4C4;
+    border-radius: 10px;
+    margin: 40px;
+    padding: 20px;
+}
+.card section{
+    display: flex;
+    flex-direction: column;
+    justify-items: space-around;
+    align-content: center;
+    height: 430px;
+}
+
+.card article{
+    height: calc(430px/5);
+    border-bottom: 1px solid #858585;
+}
+.card article > header {
+    font-size: 27px;
+    color: #FF5500;
+}
+
+.card article div > p{
+    display: block;
+    margin: 5px;
+    color: #424242;
+}
+.card > p {
+    font-size: 35px;
+    text-align: center;
+    color: #ff3300;
+}
+.card > p > span {
+    text-decoration: line-through;
+    color: #ff0000;
+}
+
+
+/*          FOOTER              */
+footer{
+    height: 200px;
+    background-color: #D15A1F;
+    margin-top: 40px;
+    padding-bottom: 10px;
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    place-items: center;
+}
+footer h2, footer span{
+    color: white;
+}
+footer h2{
+    font-size: 30px;
+}
+    /* LOGO */
+footer > .logoCol{
+    grid-column: 1/2;
+}
+footer > .logoCol > img{
+    width: 170px;
+}
+    /* FOLLOW COLUMN */
+footer > .followCol{
+    grid-column: 2/3;
+}
+
+footer > .followCol img{
+    width: 45px;
+    margin-right: 30px;
+}
+
+    /* ABOUT COLUMN */
+footer > .aboutCol{
+    grid-column: 3/4;
+}
+footer > .aboutCol > p{
+    margin: 6px;
+}
