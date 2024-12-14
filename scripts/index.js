@@ -8,7 +8,7 @@ const offers = document.querySelector('#offers');
 
 const scrollCards = () => {
 
-    const scrollValue = '432';
+    const scrollValue = '480';
 
     window.addEventListener('load', ()=>{
 

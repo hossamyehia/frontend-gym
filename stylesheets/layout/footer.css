@@ -1,0 +1,51 @@
+@import '../general/variables.css';
+
+footer{
+    height: 130px;
+    background-color: var(--main-black);
+    /* margin-top: 40px; */
+    padding-block: 10px;
+
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    place-items: center;
+}
+footer h2, footer span{
+    color: var(--main-beige);
+}
+footer h2{
+    font-size: 1.8rem;
+    margin-block-start: 0;
+    margin-block-end: 0.75rem;
+}
+footer p{
+    color: var(--main-navy);
+}
+footer span{
+    padding-inline-start: 0.25rem;
+}
+    /* LOGO */
+footer > .logoCol{
+    grid-column: 1/2;
+}
+footer > .logoCol > img{
+    width: 100px;
+}
+    /* FOLLOW COLUMN */
+footer > .followCol{
+    grid-column: 2/3;
+}
+
+footer > .followCol svg{
+    color: var(--main-navy);
+    width: 45px;
+    margin-right: 10px;
+}
+
+    /* ABOUT COLUMN */
+footer > .aboutCol{
+    grid-column: 3/4;
+}
+footer > .aboutCol > p{
+    margin: 6px 1px;
+}

@@ -1,0 +1,23 @@
+:root{
+    --main-black: hsl(0, 0%, 10%);
+    --main-white: hsl(0, 0%, 100%);
+    --main-navy: hsl(217, 38%, 28%);
+    --navy-A100: #3d76f9;
+    --navy-A200: #135CC5;
+    --navy-A300: #0C3BAA;
+    --navy-A400: #061993;
+    --navy-A500: #010280;
+    --main-red: hsl(10, 61%, 49%);
+    /* --main-orange: hsl(24, 93%, 47%); */
+    /* --light-orange: hsl(24, 100%, 50%); */
+    --dark-salmon: hsl(23, 100%, 47%);
+    --main-salmon: hsl(27, 100%, 57%);
+    --light-salmon: hsl(28, 100%, 68%);
+    --main-beige: hsl(40, 57%, 83%);
+    --beige-A100: hsl(34, 100%, 93%);
+    --beige-A200: hsl(33, 80%, 71%);
+
+    --main-color: var(--main-salmon);
+    --main-color-light: var(--light-salmon);
+    --main-color-dark: var(--dark-salmon);
+}

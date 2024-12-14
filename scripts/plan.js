@@ -9,28 +9,28 @@ let mainCourse = null,
     totalPrice = 0,
     prev = null;
 //////////////////////////////////////////////////////
-const   
+const
     mainBody = document.querySelector("#mainBody"),
     tab = document.querySelector("#tab.display"),
     courseTab = document.querySelectorAll('#courseActive'),
     planTab = document.querySelectorAll('#planActive'),
     paymentTab = document.querySelectorAll('#paymentActive'),
-//////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
     coursePage = document.querySelector('#tab[data-tab="1"]'),
     planPage = document.querySelector('#tab[data-tab="2"]'),
     paymentPage = document.querySelector('#tab[data-tab="3"]'),
-//////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
     mainOptions = coursePage.querySelectorAll("input[type=radio]"),
     secondaryOptions = coursePage.querySelectorAll("input[type=checkbox]"),
-//////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
     nextBtn = document.querySelector('#next'),
     prevBtn = document.querySelector('#previous'),
-////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////
     plans = document.querySelector('#plans'),
     planCard = document.querySelector('#planCard'),
     nextCourse = document.querySelector('.nextCol button'),
     prevCourse = document.querySelector('.previousCol button'),
-////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////
     loader = document.querySelector('#loader');
 ////////////////////////////////////////////////////
 
@@ -40,14 +40,14 @@ const
  */
 const handleCoursesSelection = () => {
 
-    window.addEventListener('load', ()=>{
+    window.addEventListener('load', () => {
 
-        mainOptions.forEach((option , index) => {
-            option.addEventListener("change",mainCourseSelection)
+        mainOptions.forEach((option, index) => {
+            option.addEventListener("change", mainCourseSelection)
         });
 
-        secondaryOptions.forEach((option , index) => {
-            option.addEventListener("change",secondaryCoursesSelection)
+        secondaryOptions.forEach((option, index) => {
+            option.addEventListener("change", secondaryCoursesSelection)
         });
 
     })
@@ -56,7 +56,7 @@ const handleCoursesSelection = () => {
      * Handles Change Event for Radioes
      * @param {object} event 
      */
-    const mainCourseSelection = (event)=>{
+    const mainCourseSelection = (event) => {
         prev = prev ? prev : event.target;
         let target = event.target;
         let parent = target.parentNode;
@@ -69,60 +69,60 @@ const handleCoursesSelection = () => {
             parent.style.border = "2px solid #FF5500";
             mainCourse = target.value;
 
-        }else{
+        } else {
             prev.parentNode.style.border = "2px solid #FF5500";
             mainCourse = prev.value;
         }
-        
-        if(!(isEmpty(courses)))
+
+        if (!(isEmpty(courses)))
             reset();
 
         toggleSecondaryCourses(mainCourse);
         activeNextButton();
     }
-    
+
     /**
      * Handles Change Event for checkboxes
      * @param {object} event 
      */
-    const secondaryCoursesSelection = (event)=>{
+    const secondaryCoursesSelection = (event) => {
 
         let target = event.target;
         let parent = target.parentNode;
-        if(target.checked == true){
+        if (target.checked == true) {
             parent.style.border = "2px solid #FF5500";
             secondaryCourses.push(target.value);
-        }else{
+        } else {
             parent.style.border = "2px solid #BBBBBB";
             secondaryCourses.pop(target.value);
         }
 
-        if(!(isEmpty(courses)))
+        if (!(isEmpty(courses)))
             reset();
 
         activeNextButton();
     }
-    
+
 }
 ////////////////////*Used Functions*///////////////////////
 /**
  * Active Next Button When the user finish selection
  */
 const activeNextButton = () => {
-    if(mainCourse != null || secondaryCourses.length != 0){
+    if (mainCourse != null || secondaryCourses.length != 0) {
         nextBtn.disabled = false;
-    }else{
+    } else {
         nextBtn.disabled = true;
-    }   
+    }
 }
 
 /**
  * Disable and Enable Secondary Courses
  */
 const toggleSecondaryCourses = (course) => {
-    if(course == "VIP" || course == "Offers" || course == "Physiotherapy"){
-        secondaryOptions.forEach((checkbox , index) => {
-            
+    if (course == "VIP" || course == "Offers" || course == "Physiotherapy") {
+        secondaryOptions.forEach((checkbox, index) => {
+
             let parent = checkbox.parentNode;
             checkbox.checked = false;
             parent.style.border = "2px solid #BBBBBB";
@@ -134,8 +134,8 @@ const toggleSecondaryCourses = (course) => {
 
         })
 
-    }else{
-        secondaryOptions.forEach((checkbox , index) => {
+    } else {
+        secondaryOptions.forEach((checkbox, index) => {
             checkbox.disabled = false;
             let img = checkbox.parentNode.querySelector('img')
             img.style.filter = "grayscale(0%)";
@@ -153,7 +153,7 @@ const reset = () => {
     coursesByName = {};
     chosenPlans = {};
     totalPrice = 0;
-    loader.classList.add('show'); 
+    loader.classList.add('show');
     planCard.classList.add('hide');
 
 }
@@ -168,26 +168,26 @@ const buttonsActions = () => {
     prevBtn.disabled = true;
     nextBtn.disabled = true;
 
-    window.addEventListener('load', ()=>{
+    window.addEventListener('load', () => {
 
         nextBtn.addEventListener("click", nBEventHandler);
         prevBtn.addEventListener("click", pBEventHandler)
 
     });
-    
+
 
     const nBEventHandler = (e) => {
         let tab = document.querySelector("#tab.display");
 
-        if(tab.dataset.tab == "1"){
+        if (tab.dataset.tab == "1") {
             let error = false;
 
             let data = {
                 mainCourse: mainCourse,
                 secondaryCourses: secondaryCourses
             }
-            
-            if(isEmpty(courses)){
+
+            if (isEmpty(courses)) {
                 nextBtn.disabled = true;
                 /*
                 getData(data, "/api/plans").then(plans => {
@@ -200,53 +200,56 @@ const buttonsActions = () => {
                     alert(err);
                 })
                 */
-                getData2().then( () => {
-                    preparePlan().then( ()=>{
+                getData2(data).then((plans) => {
+                    courses = plans;
+                    preparePlan().then(() => {
                         setTimeout(() => { endLoading(); }, 2000);
                     });
                 })
 
-                
+
             }
 
-            if(!error){
+            if (!error) {
                 tab = swapPages(tab, "2");
                 prevBtn.disabled = false;
-            }else{
+            } else {
                 error = false
             }
-            
-        }else if(tab.dataset.tab == "2"){
+
+        } else if (tab.dataset.tab == "2") {
 
             nextBtn.value = "Submit";
             tab = swapPages(tab, "3");
 
-        }else if(tab.dataset.tab == "3"){
+        } else if (tab.dataset.tab == "3") {
 
-            let data = chosenPlans;
-            sendData(data, "/api/chosenplans").then(()=>{
-                success();
-            }).catch( err => {
-                alert(err);
-            })
-            
+            success();
+
+            // let data = chosenPlans;
+            // sendData(data, "/api/chosenplans").then(()=>{
+            //     success();
+            // }).catch( err => {
+            //     alert(err);
+            // })
+
 
         }
 
-        if(tab.dataset.tab != "3"){
+        if (tab.dataset.tab === "1" || tab.dataset.tab === "2" || tab.dataset.tab === "3") {
             handleBarParts(tab);
         }
-        
+
     }
 
     const pBEventHandler = (e) => {
         let tab = document.querySelector("#tab.display");
 
-        if(tab.dataset.tab == "2"){
+        if (tab.dataset.tab == "2") {
             nextBtn.disabled = false;
             prevBtn.disabled = true;
             tab = swapPages(tab, "1");
-        }else if(tab.dataset.tab == "3"){
+        } else if (tab.dataset.tab == "3") {
             nextBtn.value = "Next";
             tab = swapPages(tab, "2");
         }
@@ -260,53 +263,59 @@ const buttonsActions = () => {
  * Test Functions
  * @returns 
  */
- function getData2(){
-    return new Promise((resolve, reject)=>{
-        courses = {
-            Fitness: [
-                {name:"#Fitness_1", duration: 1, dayNo: 3, price: 50},
-                {name:"#Fitness_2", duration: 1, dayNo: 4, price: 60},
-                {name:"#Fitness_3", duration: 1, dayNo: 5, price: 70},
-                {name:"#Fitness_4", duration: 3, dayNo: 3, price: 80},
-                {name:"#Fitness_5", duration: 3, dayNo: 4, price: 90},
-                {name:"#Fitness_6", duration: 3, dayNo: 5, price: 100},
-                {name:"#Fitness_7", duration: 6, dayNo: 3, price: 110},
-                {name:"#Fitness_8", duration: 6, dayNo: 4, price: 120},
-                {name:"#Fitness_9", duration: 6, dayNo: 5, price: 130},
-                {name:"#Fitness_10", duration: 12, dayNo: 3, price: 140},
-                {name:"#Fitness_11", duration: 12, dayNo: 4, price: 150},
-                {name:"#Fitness_12", duration: 12, dayNo: 5, price: 160},
-            ],
-            Bodybuilding: [
-                {name:"#Bodybuilding_1", duration: 1, dayNo: 3, price: 50},
-                {name:"#Bodybuilding_2", duration: 1, dayNo: 4, price: 60},
-                {name:"#Bodybuilding_3", duration: 1, dayNo: 5, price: 70},
-                {name:"#Bodybuilding_4", duration: 3, dayNo: 3, price: 80},
-                {name:"#Bodybuilding_5", duration: 3, dayNo: 4, price: 90},
-                {name:"#Bodybuilding_6", duration: 3, dayNo: 5, price: 100},
-                {name:"#Bodybuilding_7", duration: 6, dayNo: 3, price: 110},
-                {name:"#Bodybuilding_8", duration: 6, dayNo: 4, price: 120},
-                {name:"#Bodybuilding_9", duration: 6, dayNo: 5, price: 130},
-                {name:"#Bodybuilding_10", duration: 12, dayNo: 3, price: 140},
-                {name:"#Bodybuilding_11", duration: 12, dayNo: 4, price: 150},
-                {name:"#Bodybuilding_12", duration: 12, dayNo: 5, price: 160},
-            ],
-            VIP: [
-                {name:"#VIP_1", duration: 1, dayNo: 3, price: 50},
-                {name:"#VIP_2", duration: 1, dayNo: 4, price: 60},
-                {name:"#VIP_3", duration: 1, dayNo: 5, price: 70},
-                {name:"#VIP_4", duration: 3, dayNo: 3, price: 80},
-                {name:"#VIP_5", duration: 3, dayNo: 4, price: 90},
-                {name:"#VIP_6", duration: 3, dayNo: 5, price: 100},
-                {name:"#VIP_7", duration: 6, dayNo: 3, price: 110},
-                {name:"#VIP_8", duration: 6, dayNo: 4, price: 120},
-                {name:"#VIP_9", duration: 6, dayNo: 5, price: 130},
-                {name:"#VIP_10", duration: 12, dayNo: 3, price: 140},
-                {name:"#VIP_11", duration: 12, dayNo: 4, price: 150},
-                {name:"#VIP_12", duration: 12, dayNo: 5, price: 160},
-            ]
-        }
-        setTimeout(() => { resolve(); }, 0000);
+function getData2(data) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const dummpydata = {
+                Fitness: [
+                    { name: "#Fitness_1", duration: 1, dayNo: 3, price: 50 },
+                    { name: "#Fitness_2", duration: 1, dayNo: 4, price: 60 },
+                    { name: "#Fitness_3", duration: 1, dayNo: 5, price: 70 },
+                    { name: "#Fitness_4", duration: 3, dayNo: 3, price: 80 },
+                    { name: "#Fitness_5", duration: 3, dayNo: 4, price: 90 },
+                    { name: "#Fitness_6", duration: 3, dayNo: 5, price: 100 },
+                    { name: "#Fitness_7", duration: 6, dayNo: 3, price: 110 },
+                    { name: "#Fitness_8", duration: 6, dayNo: 4, price: 120 },
+                    { name: "#Fitness_9", duration: 6, dayNo: 5, price: 130 },
+                    { name: "#Fitness_10", duration: 12, dayNo: 3, price: 140 },
+                    { name: "#Fitness_11", duration: 12, dayNo: 4, price: 150 },
+                    { name: "#Fitness_12", duration: 12, dayNo: 5, price: 160 },
+                ],
+                Bodybuilding: [
+                    { name: "#Bodybuilding_1", duration: 1, dayNo: 3, price: 50 },
+                    { name: "#Bodybuilding_2", duration: 1, dayNo: 4, price: 60 },
+                    { name: "#Bodybuilding_3", duration: 1, dayNo: 5, price: 70 },
+                    { name: "#Bodybuilding_4", duration: 3, dayNo: 3, price: 80 },
+                    { name: "#Bodybuilding_5", duration: 3, dayNo: 4, price: 90 },
+                    { name: "#Bodybuilding_6", duration: 3, dayNo: 5, price: 100 },
+                    { name: "#Bodybuilding_7", duration: 6, dayNo: 3, price: 110 },
+                    { name: "#Bodybuilding_8", duration: 6, dayNo: 4, price: 120 },
+                    { name: "#Bodybuilding_9", duration: 6, dayNo: 5, price: 130 },
+                    { name: "#Bodybuilding_10", duration: 12, dayNo: 3, price: 140 },
+                    { name: "#Bodybuilding_11", duration: 12, dayNo: 4, price: 150 },
+                    { name: "#Bodybuilding_12", duration: 12, dayNo: 5, price: 160 },
+                ],
+                VIP: [
+                    { name: "#VIP_1", duration: 1, dayNo: 3, price: 50 },
+                    { name: "#VIP_2", duration: 1, dayNo: 4, price: 60 },
+                    { name: "#VIP_3", duration: 1, dayNo: 5, price: 70 },
+                    { name: "#VIP_4", duration: 3, dayNo: 3, price: 80 },
+                    { name: "#VIP_5", duration: 3, dayNo: 4, price: 90 },
+                    { name: "#VIP_6", duration: 3, dayNo: 5, price: 100 },
+                    { name: "#VIP_7", duration: 6, dayNo: 3, price: 110 },
+                    { name: "#VIP_8", duration: 6, dayNo: 4, price: 120 },
+                    { name: "#VIP_9", duration: 6, dayNo: 5, price: 130 },
+                    { name: "#VIP_10", duration: 12, dayNo: 3, price: 140 },
+                    { name: "#VIP_11", duration: 12, dayNo: 4, price: 150 },
+                    { name: "#VIP_12", duration: 12, dayNo: 5, price: 160 },
+                ]
+            }
+            resolve(
+                {
+                    [data.mainCourse]: dummpydata[data.mainCourse]
+                }
+            );
+        }, 0);
     })
 }
 
@@ -331,12 +340,12 @@ const swapPages = (tab, number) => {
  * @param {String} url 
  * @returns Done Msg
  */
-const getData = (data, url)=> {
-    return new Promise((resolve, reject)=>{
+const getData = (data, url) => {
+    return new Promise((resolve, reject) => {
 
         let xhr = new XMLHttpRequest();
         let queries = prepareQueries(data);
-        xhr.open("GET", url+queries);
+        xhr.open("GET", url + queries);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send();
         xhr.responseType = 'json';
@@ -358,11 +367,11 @@ const getData = (data, url)=> {
  */
 const prepareQueries = (data) => {
     let str = `?mainCourse=${data["mainCourse"]}`;
-    if(data["secondaryCourses"].length != 0){
+    if (data["secondaryCourses"].length != 0) {
         let tmpStr = "&secondaryCourses=";
-        data["secondaryCourses"].forEach( (course, index) => {
+        data["secondaryCourses"].forEach((course, index) => {
             tmpStr += course;
-            if(index < (data["secondaryCourses"].length - 1))
+            if (index < (data["secondaryCourses"].length - 1))
                 tmpStr += ",";
         })
         str += tmpStr;
@@ -378,7 +387,7 @@ const prepareQueries = (data) => {
  *
  */
 const sendData = (data, url) => {
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
         xhr.open("POST", url);
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -391,7 +400,7 @@ const sendData = (data, url) => {
                 reject("please try again");
             } else if (xhr.readyState === 4 && xhr.status === 200) {
                 resolve();
-            }else{
+            } else {
                 reject("please try again");
             }
         }
@@ -404,8 +413,8 @@ const sendData = (data, url) => {
  * @returns Done Msg
  */
 const preparePlan = () => {
-    return new Promise((resolve, reject)=>{
-        for( c in courses ){
+    return new Promise((resolve, reject) => {
+        for (c in courses) {
 
             chosenPlans[c] = {
                 name: null,
@@ -436,7 +445,7 @@ const preparePlan = () => {
 
             let durations = groupBy(courses[c], "duration");
 
-            for(let duration in durations){
+            for (let duration in durations) {
 
                 let option = document.createElement("div");
 
@@ -449,12 +458,12 @@ const preparePlan = () => {
 
                 let label = document.createElement("label");
                 label.setAttribute("for", duration);
-                if(duration == 1)
+                if (duration == 1)
                     label.innerText = `${duration} Month`;
-                else if(duration >= 12)
-                    label.innerText = `${duration/12} Year`;
-                else if(duration >= 24)
-                    label.innerText = `${duration/12} Years`;
+                else if (duration >= 12)
+                    label.innerText = `${duration / 12} Year`;
+                else if (duration >= 24)
+                    label.innerText = `${duration / 12} Years`;
                 else
                     label.innerText = `${duration} Months`;
                 option.appendChild(label);
@@ -462,20 +471,20 @@ const preparePlan = () => {
                 durationOptions.appendChild(option);
             }
 
-            
+
             plan.appendChild(durationOptions);
 
             let classesHeader = document.createElement("h3");
             classesHeader.innerText = "Classes";
             plan.appendChild(classesHeader);
-            
+
             let classesOptions = document.createElement('div');
             classesOptions.setAttribute("class", "options");
             classesOptions.dataset.for = "Classes";
 
             let days = groupBy(courses[c], "dayNo");
 
-            for(let day in days){
+            for (let day in days) {
 
                 let option = document.createElement("div");
                 days[day].forEach(cost => {
@@ -498,7 +507,7 @@ const preparePlan = () => {
 
                 classesOptions.appendChild(option);
             }
-            
+
             plan.appendChild(classesOptions);
 
             plans.appendChild(plan);
@@ -520,11 +529,11 @@ const durationSelection = (e) => {
 
 
     //If The User did not choose one before
-    if(chosenPlans[courseName]["duration"] == null){
+    if (chosenPlans[courseName]["duration"] == null) {
         activeClassesOptions(planNode);
-    }else{
-        if(chosenPlans[courseName]["classes"] != null){
-            if(chosenPlans[courseName]["price"] != 0){
+    } else {
+        if (chosenPlans[courseName]["classes"] != null) {
+            if (chosenPlans[courseName]["price"] != 0) {
                 totalPrice -= chosenPlans[courseName]["price"];
             }
             let planInfo = getPlanInfo(courseName, durationValue, chosenPlans[courseName]["classes"]);
@@ -532,7 +541,7 @@ const durationSelection = (e) => {
             chosenPlans[courseName]["price"] = planInfo.price;
             totalPrice += planInfo.price;
         }
-        
+
     }
 
 
@@ -545,12 +554,12 @@ const durationSelection = (e) => {
  * 
  * @param {*} e 
  */
-const classesSelection = (e) =>{
+const classesSelection = (e) => {
     let courseName = e.target.getAttribute('name').split("_")[0];
     let classValue = e.target.value;
 
     //If The User chose one before
-    if(chosenPlans[courseName]["classes"] != null){
+    if (chosenPlans[courseName]["classes"] != null) {
         totalPrice -= chosenPlans[courseName]["price"];
     }
 
@@ -567,19 +576,19 @@ const classesSelection = (e) =>{
 /**
  * 
  */
-const toggleActiveNext = ()=>{
+const toggleActiveNext = () => {
     let check = true;
     // IF the User didnt choose any plan yet
-    if(!(isEmpty(chosenPlans))){
+    if (!(isEmpty(chosenPlans))) {
         for (const plan in chosenPlans) {
             if (chosenPlans[plan]["name"] == null) {
                 check = false;
                 break;
             }
         }
-        if(check){
+        if (check) {
             nextBtn.disabled = false;
-        }else{
+        } else {
             nextBtn.disabled = true;
         }
     }
@@ -590,7 +599,7 @@ const toggleActiveNext = ()=>{
  */
 const activeClassesOptions = (planNode) => {
     let classesOptions = planNode.querySelectorAll("div[data-for=Classes] input");
-    classesOptions.forEach( option =>{
+    classesOptions.forEach(option => {
         option.disabled = false;
     })
 }
@@ -601,9 +610,9 @@ const activeClassesOptions = (planNode) => {
  * @param {Number} classes 
  * @returns 
  */
-const getPlanInfo = (courseName, duration, classes)=>{
-    for(let plan in coursesByName[courseName]){
-        if(coursesByName[courseName][plan]["duration"] == duration && coursesByName[courseName][plan]["classes"] == classes){
+const getPlanInfo = (courseName, duration, classes) => {
+    for (let plan in coursesByName[courseName]) {
+        if (coursesByName[courseName][plan]["duration"] == duration && coursesByName[courseName][plan]["classes"] == classes) {
             let tmp = coursesByName[courseName][plan];
             tmp["name"] = plan;
             return tmp;
@@ -622,8 +631,8 @@ const displayCost = () => {
  * Show the Success Msg When Finish
  */
 const success = () => {
-    let html = 
-    `
+    let html =
+        `
     <div class="successMsg">
         <div>
             <header>Note</header>
@@ -640,19 +649,18 @@ const success = () => {
  * Stop Loading Screen
  */
 const endLoading = () => {
-        
+
     loader.classList.add('hiding');
-    setTimeout(() => { 
+    setTimeout(() => {
         loader.classList.remove('hiding');
         loader.classList.remove('show');
-        
+
         planCard.classList.add('showing');
-        setTimeout(() => { 
+        setTimeout(() => {
             planCard.classList.remove('hide');
         }, 1000);
+    }, 1700);
 
-    }, 1700);    
-    
 }
 //////////////////////////////////////////////////////////
 
@@ -661,25 +669,25 @@ const endLoading = () => {
  * Scroll Plan Cards
  */
 const scrollCards = () => {
-    
+
     const scrollValue = '600';
 
-    window.addEventListener('load', ()=>{
-        nextCourse.addEventListener('click',next);
-        prevCourse.addEventListener('click',prev)
+    window.addEventListener('load', () => {
+        nextCourse.addEventListener('click', next);
+        prevCourse.addEventListener('click', prev)
     })
 
     const next = (e) => {
         plans.scrollBy({
-            left: scrollValue, 
-            top:0,
-            behavior:"smooth"
+            left: scrollValue,
+            top: 0,
+            behavior: "smooth"
         });
     }
 
     const prev = (e) => {
         plans.scrollBy({
-            left: -scrollValue, 
+            left: -scrollValue,
             top: 0,
             behavior: "smooth"
         });
@@ -699,20 +707,20 @@ const handleBarParts = (tab) => {
         part.classList.remove("activeTab");
     })
 
-    if(tab.dataset.tab == "1"){
-        courseTab.forEach((part)=>{
+    if (tab.dataset.tab == "1") {
+        courseTab.forEach((part) => {
             part.classList.add("activeTab");
         })
-    }else if(tab.dataset.tab == "2"){
+    } else if (tab.dataset.tab == "2") {
         planTab.forEach((part) => {
             part.classList.add("activeTab");
         })
-    }else if(tab.dataset.tab == "3"){
+    } else if (tab.dataset.tab == "3") {
         paymentTab.forEach((part) => {
             part.classList.add("activeTab");
         })
     }
-    
+
 }
 
 
@@ -720,9 +728,9 @@ const handleBarParts = (tab) => {
  * Main Function
  * @param  {...any} Funcs 
  */
-const Main = (...Funcs) =>{
+const Main = (...Funcs) => {
     handleBarParts(tab);
-    Funcs.forEach(Func=>{
+    Funcs.forEach(Func => {
         Func();
     })
 }
@@ -740,9 +748,9 @@ Main(handleCoursesSelection, scrollCards, buttonsActions);
  * @returns Boolean
  */
 const isEmpty = (obj) => {
-    return obj 
-    && Object.keys(obj).length === 0
-    && Object.getPrototypeOf(obj) === Object.prototype;
+    return obj
+        && Object.keys(obj).length === 0
+        && Object.getPrototypeOf(obj) === Object.prototype;
 }
 
 /**
@@ -751,10 +759,10 @@ const isEmpty = (obj) => {
  * @param {String} key 
  * @returns New Grouped Array
  */
-const groupBy = function(xs, key) {
-    return xs.reduce(function(rv, x) {
-      (rv[x[key]] = rv[x[key]] || []).push(x);
-      return rv;
+const groupBy = function (xs, key) {
+    return xs.reduce(function (rv, x) {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
     }, {});
 };
 
@@ -763,17 +771,17 @@ const groupBy = function(xs, key) {
  * @param {ِArray} array 
  * @returns 
  */
-const groupByName = (array) =>{
-    return array.reduce((pr,cr,i)=>{
+const groupByName = (array) => {
+    return array.reduce((pr, cr, i) => {
         pr[cr["name"]] = {
             duration: cr.duration,
             classes: cr.dayNo,
             price: cr.price
         };
         return pr;
-    },{});
+    }, {});
 }
 
-  
+
 
 
